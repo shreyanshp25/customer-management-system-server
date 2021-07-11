@@ -16,5 +16,9 @@ public class CustomerService {
 	public List<Customers> getAll(){
 		return customerRepo.findAll();
 	}
+	//post
+	public Customers postCust(Customers customer) {
+		return customerRepo.save(customer);
+	}
 
 }
