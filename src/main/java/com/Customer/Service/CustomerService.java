@@ -1,6 +1,8 @@
 package com.Customer.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,14 @@ public class CustomerService {
 		
 		Customers updatedCustomer = customerRepo.save(cust);
 		return ResponseEntity.ok(updatedCustomer);
+	}
+	//delete an entry
+	public ResponseEntity<Map<String, Boolean>> deleteCustomer(Long id){
+		Customers customer = customerRepo.findById(id).orElseThrow(() -> new ResourceNotFound("Customer to be deleted doesn't exist"+ id));
+		customerRepo.delete(customer);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("Customer Deleted", Boolean.TRUE);
+		return ResponseEntity.ok(map);
 	}
 
 }
