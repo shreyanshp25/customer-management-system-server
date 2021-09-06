@@ -3,7 +3,10 @@ package com.Customer.Controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,8 +34,9 @@ public class CustomerController {
 		return customerService.getAll();
 	}
 	@PostMapping("/customers")
-	public Customers postCustomers(@RequestBody Customers customer) {
-		return customerService.postCust(customer);
+	public ResponseEntity<Customers> postCustomers(@Valid @RequestBody Customers customer) {
+		Customers savedCust = customerService.postCust(customer);
+		return new ResponseEntity<Customers>(savedCust, HttpStatus.CREATED);
 	}
 	@GetMapping("/customers/{id}")
 	public ResponseEntity<Customers> getCustomerById(@PathVariable Long id) {
